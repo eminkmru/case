@@ -1,27 +1,9 @@
-import axios from "axios";
 import "./App.css";
-import Products from "./components/Products";
-import { useEffect, useState } from "react";
 import { Link, Route, Routes } from "react-router-dom";
-import Basket from "./Basket";
-import Home from "./Home";
+import Basket from "./pages/Basket";
+import Home from "./pages/Home";
 
 function App() {
-  // const [data, setData] = useState();
-
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       const response = await axios.get("/data/product.json");
-  //       const productList = response.data.products;
-  //       setData(productList);
-  //     } catch (error) {
-  //       console.log(error);
-  //     }
-  //   };
-
-  //   fetchData();
-  // }, []);
   return (
     <div className="App" style={{ backgroundColor: "#c7c9c8" }}>
       <Routes>
@@ -40,12 +22,6 @@ function App() {
           </Link>
         </div>
       </div>
-      {/* <div className="products ">
-        {data &&
-          data.map((product) => (
-            <Products key={product.id} product={product} />
-          ))}
-      </div> */}
     </div>
   );
 }

@@ -1,24 +1,41 @@
+import axios from "axios";
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { addToCart } from "../redux/productSlice";
 
 const Basket = () => {
   const { cartItems, total } = useSelector((state) => state.product);
 
+  const dispatch = useDispatch();
+
   const [chkout, setChkout] = useState(true);
-  const [click, setClick] = useState(false);
+  const [discountBtnDisabled, setDiscountBtnDisabled] = useState(false);
   const [newCount, setNewCount] = useState(0);
 
-  const handleClick = () => {
-    setClick(true);
+  const calculateDiscount = () => {
+    setDiscountBtnDisabled(true);
     const discount = total * 0.2;
     setNewCount(total - discount);
     setChkout(false);
   };
+
   const handleSubmit = () => {
     if (chkout) {
       alert("Please apply discount first.");
     } else {
+      axios
+        .post("https://jsonplaceholder.typicode.com/posts", {
+          total: newCount,
+          cartItems: cartItems,
+        })
+        .then((response) => {
+          console.log(response);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
       alert("Order is completed.");
+      dispatch(addToCart([]));
     }
   };
 
@@ -32,8 +49,8 @@ const Basket = () => {
           <hr />
           <div className="shopingCart">
             {cartItems &&
-              cartItems.map((item) => (
-                <div>
+              cartItems.map((item, index) => (
+                <div key={index}>
                   <div className="productDetails">
                     <img src={item.img} alt="" />
                     <h3>{item.title}</h3>
@@ -56,7 +73,11 @@ const Basket = () => {
 
             <div className="calc">
               <h4>Apply Discount: </h4>
-              <button className="btn" onClick={handleClick} disabled={click}>
+              <button
+                className="btn"
+                onClick={calculateDiscount}
+                disabled={discountBtnDisabled}
+              >
                 20% Discount
               </button>
             </div>
@@ -65,14 +86,16 @@ const Basket = () => {
               <h4>Discounted price: </h4>
               <h3>{newCount > 0 ? newCount : "-"}₺</h3>
             </div>
-            <button
-              type="submit"
-              className="btn"
-              style={{ backgroundColor: "#66b3ff" }}
-              onClick={handleSubmit}
-            >
-              CHECKOUT
-            </button>
+            <form>
+              <button
+                type="submit"
+                className="btn"
+                style={{ backgroundColor: "#66b3ff" }}
+                onClick={handleSubmit}
+              >
+                CHECKOUT
+              </button>
+            </form>
           </div>
         </div>
       </div>

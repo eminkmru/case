@@ -1,7 +1,6 @@
 import React from "react";
 import axios from "axios";
-import "./App.css";
-import Products from "./components/Products";
+import Products from "../components/Products";
 import { useEffect, useState } from "react";
 
 const Home = () => {
@@ -24,8 +23,8 @@ const Home = () => {
     <div>
       <div className="products ">
         {data &&
-          data.map((product) => (
-            <Products key={product.id} product={product} />
+          data.map((product, index) => (
+            <Products key={index} product={product} />
           ))}
       </div>
     </div>
