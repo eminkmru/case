@@ -13,10 +13,13 @@ const Basket = () => {
   const [newCount, setNewCount] = useState(0);
 
   const calculateDiscount = () => {
-    setDiscountBtnDisabled(true);
-    const discount = total * 0.2;
-    setNewCount(total - discount);
-    setChkout(false);
+    if (total === 0) return alert("Please add items to cart.");
+    else {
+      setDiscountBtnDisabled(true);
+      const discount = total * 0.2;
+      setNewCount(total - discount);
+      setChkout(false);
+    }
   };
 
   const handleSubmit = () => {
@@ -34,8 +37,8 @@ const Basket = () => {
         .catch((error) => {
           console.log(error);
         });
-      alert("Order is completed.");
       dispatch(addToCart([]));
+      alert("Order is completed.");
     }
   };
 
@@ -54,6 +57,7 @@ const Basket = () => {
                   <div className="productDetails">
                     <img src={item.img} alt="" />
                     <h3>{item.title}</h3>
+                    <h3>{item.size}</h3>
                     <h3>{item.price}₺</h3>
                   </div>
                   <hr />
@@ -90,7 +94,7 @@ const Basket = () => {
               <button
                 type="submit"
                 className="btn"
-                style={{ backgroundColor: "#66b3ff" }}
+                style={{ backgroundColor: "#66b3ff", width: "100%" }}
                 onClick={handleSubmit}
               >
                 CHECKOUT
