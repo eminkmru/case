@@ -22,9 +22,10 @@ const Basket = () => {
     }
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = (e) => {
     if (chkout) {
       alert("Please apply discount first.");
+      e.preventDefault();
     } else {
       axios
         .post("https://jsonplaceholder.typicode.com/posts", {
@@ -95,7 +96,7 @@ const Basket = () => {
                 type="submit"
                 className="btn"
                 style={{ backgroundColor: "#66b3ff", width: "100%" }}
-                onClick={handleSubmit}
+                onClick={(e) => handleSubmit(e)}
               >
                 CHECKOUT
               </button>

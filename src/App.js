@@ -20,7 +20,7 @@ function App() {
         </div>
         <div>
           <Link to="/basket" className="cartBtn">
-            <i class="fa-solid fa-cart-shopping"></i> Cart
+            <i className="fa-solid fa-cart-shopping"></i> Cart
             {count > 0 && <span className="cartCount">{count}</span>}
           </Link>
         </div>
